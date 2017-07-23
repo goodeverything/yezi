@@ -3,6 +3,12 @@ import Router from 'vue-router';
 import Login from '@/components/Login';
 import NotFound from '@/components/404';
 import Home from '@/components/Home';
+import Table from '@/views/nav1/Table.vue';
+import Form from '@/views/nav1/Form.vue';
+import User from '@/views/nav1/User.vue';
+import Page4 from '@/views/nav2/Page4.vue';
+import Page5 from '@/views/nav2/Page5.vue';
+import Page6 from '@/views/nav3/Page6.vue';
 
 Vue.use(Router);
 
@@ -10,17 +16,43 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'Home',
-      component: Home
+      component: Home,
+      name: '导航一',
+      iconCls: 'el-icon-message', // 图标样式class
+      children: [
+        {path: '/table', component: Table, name: 'Table'},
+        {path: '/form', component: Form, name: 'Form'},
+        {path: '/user', component: User, name: '列表'}
+      ]
+    },
+    {
+      path: '/',
+      component: Home,
+      name: '导航二',
+      iconCls: 'el-icon-menu',
+      children: [
+        {path: '/page4', component: Page4, name: '页面4'},
+        {path: '/page5', component: Page5, name: '页面5'}
+      ]
+    },
+    {
+      path: '/',
+      component: Home,
+      name: '导航三',
+      iconCls: 'el-icon-setting',
+      children: [
+        {path: '/page6', component: Page6, name: '页面6 '}
+      ]
     },
     {
       path: '/login',
-      component: Login
+      component: Login,
+      hidden: true
     },
     {
       path: '*',
-      hidden: true,
-      redirect: {path: '/404'}
+      redirect: {path: '/404'},
+      hidden: true
     },
     {
       path: '/404',

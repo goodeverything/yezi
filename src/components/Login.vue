@@ -19,11 +19,6 @@
 </template>
 
 <script type="text/ecmascript-6">
-  import ElFormItem from '../../node_modules/element-ui/packages/form/src/form-item';
-  import ElInput from '../../node_modules/element-ui/packages/input/src/input';
-  import ElButton from '../../node_modules/element-ui/packages/button/src/button';
-  import ElCheckbox from '../../node_modules/element-ui/packages/checkbox/src/checkbox';
-
   export default {
     data() {
       return {
@@ -91,7 +86,6 @@
         this.$refs.loginUser.resetFields();
       }
     },
-    components: {ElCheckbox, ElButton, ElInput, ElFormItem},
     name: 'login'
   };
 </script>

@@ -7,7 +7,8 @@ import axios from 'axios';
 import vuex from 'vuex';
 import elementUI from 'element-ui';
 import 'element-ui/lib/theme-default/index.css';
-import './common/stylus/base.styl';
+import 'font-awesome/css/font-awesome.min.css';
+import './common/stylus/index.styl';
 
 router.beforeEach((to, from, next) => {
   console.log(to);
