@@ -1,6 +1,6 @@
 <template>
   <div class="table-wrapper">
-    <el-table :data="users" highlight-current-row @current-change="handleCurrentChange"
+    <el-table :data="users" highlight-current-row
               @selection-change="handleSelectionChange" style="width: 100%;" stripe border>
       <el-table-column type="selection" width="55">
       </el-table-column>
@@ -23,11 +23,20 @@
         </template>
       </el-table-column>
     </el-table>
+    <el-row>
+      <!--工具条-->
+      <el-col :span="24" class="toolbar">
+        <el-button type="danger" @click="batchRemove" :disabled="this.selection.length===0">批量删除</el-button>
+        <el-pagination layout="prev, pager, next" @current-change="handleCurrentChange" :page-size="20" :total="total"
+                       style="float:right;">
+        </el-pagination>
+      </el-col>
+    </el-row>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
-  import {getUserListPage} from '../../api/api';
+  import {getUserListPage, batchRemoveUser} from '../../api/api';
   export default {
     data() {
       return {
@@ -37,30 +46,50 @@
         users: [],
         total: 0,
         page: 1,
-        currentRow: null,
         selection: []
       };
     },
     methods: {
+      getUsers() {
+        let params = {
+          page: this.page,
+          name: this.filters.name
+        };
+        getUserListPage(params).then(response => {
+          this.total = response.data.total;
+          this.users = response.data.users;
+        });
+      },
       handleCurrentChange(val) {
-        this.currentRow = val;
+        this.page = val;
+        this.getUsers();
       },
       handleSelectionChange(selection) {
         this.selection = selection;
       },
       formatSex(row, column) {
         return row.sex === 1 ? '男' : row.sex === 0 ? '女' : '未知';
+      },
+      batchRemove() {
+        var ids = this.selection.map(item => item.id).toString();
+        this.$confirm('确认删除选中记录吗？', '提示', {
+          type: 'warning'
+        }).then(() => {
+          let para = {ids: ids};
+          batchRemoveUser(para).then((res) => {
+            this.listLoading = false;
+            this.$message({
+              message: '删除成功',
+              type: 'success'
+            });
+            this.getUsers();
+          });
+        });
       }
     },
+
     mounted() {
-      let params = {
-        page: this.page,
-        name: this.filters.name
-      };
-      getUserListPage(params).then(response => {
-        this.total = response.data.total;
-        this.users = response.data.users;
-      });
+      this.getUsers();
     }
   };
 </script>
