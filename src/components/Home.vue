@@ -1,13 +1,14 @@
 <template>
   <div class="home">
     <el-row class="header">
-      <el-col :span="10" class="logo" :class="isCollapsed?'logo-collapse-width':'logo-normal-width'">
-        <span class="brand"> {{isCollapsed ? '' : sysName}}</span>
+      <el-col :span="10" class="brand" :class="isCollapsed?'logo-collapse-width':'logo-normal-width'">
+        <span class="brand-title"> {{isCollapsed ? '' : sysName}}</span>
+        <span class="brand-button" @click.prevent="collapse"><i class="fa fa-align-justify"></i></span>
       </el-col>
       <el-col :span="10">
-        <div class="tools" @click.prevent="collapse">
-          <i class="fa fa-align-justify"></i>
-        </div>
+        <!--<div class="tools" @click.prevent="collapse">-->
+        <!--<i class="fa fa-align-justify"></i>-->
+        <!--</div>-->
       </el-col>
       <el-col :span="4" class="login-info">
         <el-dropdown trigger="hover">
@@ -20,10 +21,10 @@
         </el-dropdown>
       </el-col>
     </el-row>
-    <el-row class="main">
+    <el-row class="page-container">
       <aside class="menu-wrapper" :class="isCollapsed?'menu-collapsed':'menu-expanded'">
         <el-menu :default-active="$route.path" class="el-menu-vertical-demo" :collapse="isCollapsed"
-                 unique-opened="true" router="true">
+                 unique-opened router>
           <template v-for="(item,index) in $router.options.routes" v-if="!item.hidden">
             <el-submenu :index="index+''" v-if="!item.leaf">
               <template slot="title">
@@ -46,8 +47,8 @@
             </el-breadcrumb>
           </el-col>
         </el-row>
-        <el-row>
-          <el-col :span="24" class="content-wrapper">
+        <el-row class="content">
+          <el-col :span="24">
             <transition name="fade" mode="out-in">
               <router-view></router-view>
             </transition>
@@ -65,7 +66,7 @@
         sysName: 'VUEADMIN',
         isCollapsed: false,
         loginAvatar: '',
-        loginName: '孙钦伟'
+        loginName: ''
       };
     },
     methods: {
@@ -79,6 +80,14 @@
           _this.$router.push('/login');
         });
       }
+    },
+    mounted() {
+      var user = sessionStorage.getItem('user');
+      if (user) {
+        user = JSON.parse(user);
+        this.loginName = user.name || '';
+        this.loginAvatar = user.avatar || '';
+      }
     }
   };
 </script>
@@ -91,14 +100,18 @@
       line-height: 60px
       background: #20a0ff
       color: #fff
-      .logo
+      .brand
         height: 60px
         font-size: 22px
-        padding-left: 20px
-        padding-right: 20px;
+        text-align: center
         border-color: rgba(238, 241, 146, 0.3);
         border-right-width: 1px;
         border-right-style: solid;
+        .brand-button
+          display: inline-block
+          padding: 0px 23px
+          width: 14px
+          cursor: pointer
         img
           width: 40px;
           float: left;
@@ -125,7 +138,7 @@
             border-radius: 20px
             margin: 10px 0px 10px 10px
             float: right
-    .main
+    .page-container
       display: flex
       position: absolute
       top: 60px
@@ -141,7 +154,7 @@
           width: 230px
       .content-wrapper
         flex: 1
-        /*overflow-y: scroll;*/
+        overflow-y: scroll
         padding: 20px
         .breadcrumb-wrapper
           .title
@@ -150,7 +163,8 @@
             color: #475669
           .breadcrumb
             float: right
-        .content-wrapper
+        .content
+          margin-top :20px
           background-color: #fff
           box-sizing: border-box
 </style>

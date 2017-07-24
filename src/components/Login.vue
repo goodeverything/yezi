@@ -19,6 +19,8 @@
 </template>
 
 <script type="text/ecmascript-6">
+  import {requestLogin} from '../api/api';
+
   export default {
     data() {
       return {
@@ -51,31 +53,17 @@
         this.$refs.loginUser.validate(valid => {
           if (valid) {
             let loginParams = {username: this.loginUser.userId, password: this.loginUser.userPwd};
-            this.$http.post('/login', loginParams)
-              .then(response => {
-                response = response.data;
-                console.log(response);
-                if (response.success) {
-                  this.user = response.data;
-                  console.log(this.user);
-                  sessionStorage.setItem('user', JSON.stringify(this.user));
-                  this.$router.push({path: '/table'});
-                } else {
-                  this.$message(response.message);
-                }
-              })
-              .catch((error) => {
-                if (error.response) {
-                  // 请求已发出，但服务器响应的状态码不在 2xx 范围内
-                  console.log(error.response.data);
-                  console.log(error.response.status);
-                  console.log(error.response.headers);
-                } else {
-                  // Something happened in setting up the request that triggered an Error
-                  console.log('Error', error.message);
-                }
-                console.log(error.config);
-              });
+            requestLogin(loginParams).then(response => {
+              console.log(response);
+              if (response.success) {
+                this.user = response.data;
+                console.log(this.user);
+                sessionStorage.setItem('user', JSON.stringify(this.user));
+                this.$router.push({path: '/table'});
+              } else {
+                this.$message(response.message);
+              }
+            });
           } else {
             console.log('submit error!!');
             return false;
