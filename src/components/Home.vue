@@ -21,8 +21,9 @@
       </el-col>
     </el-row>
     <el-row class="main">
-      <aside class="slide-left" :class="isCollapsed?'menu-collapsed':'menu-expanded'">
-        <el-menu :default-active="$route.path" class="el-menu-vertical-demo" :collapse="isCollapsed"  unique-opened="true" router="true">
+      <aside class="menu-wrapper" :class="isCollapsed?'menu-collapsed':'menu-expanded'">
+        <el-menu :default-active="$route.path" class="el-menu-vertical-demo" :collapse="isCollapsed"
+                 unique-opened="true" router="true">
           <template v-for="(item,index) in $router.options.routes" v-if="!item.hidden">
             <el-submenu :index="index+''" v-if="!item.leaf">
               <template slot="title">
@@ -36,12 +37,12 @@
           </template>
         </el-menu>
       </aside>
-      <section class="content-container">
+      <section class="content-wrapper">
         <el-row>
           <el-col :span="24" class="breadcrumb-wrapper">
             <strong class="title">{{$route.name}}</strong>
             <el-breadcrumb separator="/" class="breadcrumb">
-              <el-breadcrumb-item v-for="item in $route.matched" :key="item.path" >{{item.name}}</el-breadcrumb-item>
+              <el-breadcrumb-item v-for="item in $route.matched" :key="item.path">{{item.name}}</el-breadcrumb-item>
             </el-breadcrumb>
           </el-col>
         </el-row>
@@ -107,50 +108,49 @@
         &.logo-collapse-width
           width: 60px
       .tools
-        padding: 0px 23px;
-        width: 14px;
-        height: 60px;
-        line-height: 60px;
-        cursor: pointer;
+        padding: 0px 23px
+        width: 14px
+        height: 60px
+        line-height: 60px
+        cursor: pointer
       .login-info
-        text-align: right;
-        padding-right: 35px;
-        float: right;
+        text-align: right
+        padding-right: 35px
+        float: right
         .login-avatar
-          cursor: pointer;
+          cursor: pointer
           img
-            width: 40px;
-            height: 40px;
-            border-radius: 20px;
-            margin: 10px 0px 10px 10px;
-            float: right;
+            width: 40px
+            height: 40px
+            border-radius: 20px
+            margin: 10px 0px 10px 10px
+            float: right
     .main
-      display: flex;
-      overflow: hidden;
-      .slide-left
-        flex: 0 0 230px;
-        width: 230px;
-      .menu-collapsed {
-        flex: 0 0 60px;
-        width: 60px;
-      }
-      .menu-expanded {
-        flex: 0 0 230px;
-        width: 230px;
-      }
-      .content-container
-        left: 230px;
-        flex: 1;
-        overflow-y: scroll;
-        padding: 20px;
+      display: flex
+      position: absolute
+      top: 60px
+      bottom: 0
+      width: 100%
+      overflow: hidden
+      .menu-wrapper
+        &.menu-collapsed
+          flex: 0 0 60px
+          width: 60px
+        &.menu-expanded
+          flex: 0 0 230px
+          width: 230px
+      .content-wrapper
+        flex: 1
+        /*overflow-y: scroll;*/
+        padding: 20px
         .breadcrumb-wrapper
           .title
-            width: 200px;
-            float: left;
-            color: #475669;
+            width: 200px
+            float: left
+            color: #475669
           .breadcrumb
-            float: right;
+            float: right
         .content-wrapper
-          background-color: #fff;
-          box-sizing: border-box;
+          background-color: #fff
+          box-sizing: border-box
 </style>
