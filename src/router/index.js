@@ -5,7 +5,7 @@ import NotFound from '@/components/404';
 import Home from '@/components/Home';
 import Table from '@/views/nav1/Table.vue';
 import Form from '@/views/nav1/Form.vue';
-import User from '@/views/nav1/User.vue';
+import List from '@/views/nav1/List.vue';
 import Page4 from '@/views/nav2/Page4.vue';
 import Page5 from '@/views/nav2/Page5.vue';
 import Page6 from '@/views/nav3/Page6.vue';
@@ -22,7 +22,7 @@ export default new Router({
       children: [
         {path: '/table', component: Table, name: 'Table'},
         {path: '/form', component: Form, name: 'Form'},
-        {path: '/user', component: User, name: '列表'}
+        {path: '/list', component: List, name: 'List'}
       ]
     },
     {

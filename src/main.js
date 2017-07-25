@@ -25,6 +25,17 @@ router.beforeEach((to, from, next) => {
 Vue.use(elementUI);
 Vue.use(vuex);
 
+let store = new vuex.Store({
+  state: {
+    count: 10
+  },
+  mutations: {
+    inc: state => state.count++,
+    dec: state => state.count--
+  }
+});
+Vue.prototype.store = store;
+
 Vue.config.productionTip = false;
 
 /* eslint-disable no-new */
