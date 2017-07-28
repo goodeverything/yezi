@@ -3,12 +3,12 @@ import Router from 'vue-router';
 import Login from '@/components/Login';
 import NotFound from '@/components/404';
 import Home from '@/components/Home';
-import Table from '@/views/nav1/Table.vue';
-import Form from '@/views/nav1/Form.vue';
-import List from '@/views/nav1/List.vue';
-import Page4 from '@/views/nav2/Page4.vue';
-import Page5 from '@/views/nav2/Page5.vue';
-import Page6 from '@/views/nav3/Page6.vue';
+import Table from '@/components/nav1/Table.vue';
+import Form from '@/components/nav1/Form.vue';
+import List from '@/components/nav1/List.vue';
+import Page4 from '@/components/nav2/Page4.vue';
+import Page5 from '@/components/nav2/Page5.vue';
+import Page6 from '@/components/nav3/Page6.vue';
 
 Vue.use(Router);
 
